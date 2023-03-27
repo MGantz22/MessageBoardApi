@@ -1,0 +1,22 @@
+
+
+Group
+*primaryId
+*group name
+*List of posts
+
+(one to many)
+
+posts
+*primary id 
+*group name (obj reference)
+*group id 
+*date stamp
+*userId
+*user name (obj reference)
+*message body
+
+user
+*userId
+*userName
+*list of posts
