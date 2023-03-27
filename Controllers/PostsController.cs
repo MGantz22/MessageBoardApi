@@ -19,13 +19,28 @@ namespace MessageBoard.Controllers
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Post>>> Get()
+    public async Task<ActionResult<IEnumerable<Post>>> Get([FromQuery] string group, string user)
     {
-        return await _db.Posts
+      IQueryable<Post> query = _db.Posts.AsQueryable();
+
+      if (group != null)
+      {
+        query = query.Where(item => item.Group.GroupName == group);
+      }
+
+      if (user != null)
+      {
+        query = query.Where(item=>item.User.UserName == user);
+      }
+      
+      return await query.ToListAsync();
+
+
+        // return await _db.Posts
         // .Include(thingy => thingy.Group)
         // .Include(thingy=> thingy.User)
         // .AsQueryable()
-        .ToListAsync();
+        // .ToListAsync();
     }
 
     /*
