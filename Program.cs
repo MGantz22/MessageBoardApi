@@ -1,8 +1,6 @@
 using MessageBoard.Models;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
-
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -18,10 +16,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-
-
-
-
 namespace MessageBoard;
 
 public class Program
@@ -29,7 +23,8 @@ public class Program
   public static void Main(string[] args)
   {
     var builder = WebApplication.CreateBuilder(args);
-
+    var startup = new Startup(builder.Configuration);
+    
     // Add services to the container.
 
     builder.Services.AddControllers();
@@ -46,9 +41,12 @@ public class Program
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
     builder.Services.AddAuthentication();
-    // builder.WebHost.UseStartup<Startup>();
+ 
+    startup.ConfigureServices(builder.Services); // calling ConfigureServices method
+  
     var app = builder.Build();
-
+    startup.Configure(app, builder.Environment);// calling Configure method
+    
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
     {
