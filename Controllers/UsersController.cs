@@ -24,8 +24,24 @@ namespace MessageBoard.Controllers
     }
 
     [HttpGet("Admins")]
-    [Authorize]
+    [Authorize(Roles = "Administrator")]
     public IActionResult AdminsEndpoint()
+    {
+      User currentUser = GetCurrentUser();
+      return Ok($"Hi {currentUser.GivenName}, you are a(n) {currentUser.Role}");
+    }
+
+    [HttpGet("Sellers")]
+    [ Authorize(Roles = "Seller")]
+    public IActionResult SellersEndpoint()
+    {
+      User currentUser = GetCurrentUser();
+      return Ok($"Hi {currentUser.GivenName}, you are a(n) {currentUser.Role}");
+    }
+
+    [HttpGet("AdminsAndSellers")]
+    [ Authorize(Roles = "Administrator, Seller")]
+    public IActionResult AdminsAndSellersEndpoint()
     {
       User currentUser = GetCurrentUser();
       return Ok($"Hi {currentUser.GivenName}, you are a(n) {currentUser.Role}");

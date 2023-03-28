@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using MessageBoard.Models;
 
 namespace MessageBoard
 {
@@ -25,7 +27,16 @@ namespace MessageBoard
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
+        {   
+            services.AddDbContext<MessageBoardApiContext>(
+                dbContextOptions => dbContextOptions
+                    .UseMySql(
+                        Configuration["ConnectionStrings:DefaultConnection"], 
+                        ServerVersion.AutoDetect(Configuration["ConnectionStrings:DefaultConnection"]
+                        )
+                    )
+            );
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {
                     options.TokenValidationParameters = new TokenValidationParameters
@@ -49,6 +60,8 @@ namespace MessageBoard
         {
             if (env.IsDevelopment())
             {
+                app.UseSwagger();
+                app.UseSwaggerUI();
                 app.UseDeveloperExceptionPage();
             }
             else
@@ -56,6 +69,7 @@ namespace MessageBoard
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+                app.UseHttpsRedirection();
             }
 
             app.UseHttpsRedirection();

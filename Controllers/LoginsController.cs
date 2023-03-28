@@ -16,12 +16,12 @@ namespace MessageBoard.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LoginController : ControllerBase
+    public class LoginsController : ControllerBase
     {
         private IConfiguration _config;
         private readonly MessageBoardApiContext _db;
 
-        public LoginController(IConfiguration config, MessageBoardApiContext db)
+        public LoginsController(IConfiguration config, MessageBoardApiContext db)
         {
             _db = db;
             _config = config;
