@@ -3,12 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using MessageBoard.Models;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Options;
-using JsonPatchSample;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MessageBoard.Controllers
 {
-[Route("api/[controller]")]
+  [Route("api/[controller]")]
   [ApiController]
+  [Authorize]
   public class PostsController : ControllerBase
   {
     private readonly MessageBoardApiContext _db;

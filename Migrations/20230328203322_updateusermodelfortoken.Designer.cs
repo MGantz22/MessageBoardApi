@@ -3,6 +3,7 @@ using System;
 using MessageBoard.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MessageBoardApi.Migrations
 {
     [DbContext(typeof(MessageBoardApiContext))]
-    partial class MessageBoardApiContextModelSnapshot : ModelSnapshot
+    [Migration("20230328203322_updateusermodelfortoken")]
+    partial class updateusermodelfortoken
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,28 +96,6 @@ namespace MessageBoardApi.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = 2,
-                            EmailAddress = "jason.admin@email.com",
-                            GivenName = "Jason",
-                            Password = "MyPass_w0rd",
-                            Role = "Administrator",
-                            Surname = "Bryant",
-                            UserName = "jason_admin"
-                        },
-                        new
-                        {
-                            UserId = 3,
-                            EmailAddress = "elyse.seller@email.com",
-                            GivenName = "Elyse",
-                            Password = "MyPass_w0rd",
-                            Role = "Seller",
-                            Surname = "Lambert",
-                            UserName = "elyse_seller"
-                        });
                 });
 
             modelBuilder.Entity("MessageBoard.Models.Post", b =>

@@ -17,5 +17,10 @@ public class MessageBoardApiContext : DbContext
         .HasData(
           new Group { GroupId = 1, GroupName = "Gossip"}
         );
+      builder.Entity<User>()
+        .HasData(
+          new User {UserId = 2, UserName = "jason_admin", EmailAddress = "jason.admin@email.com", Password = "MyPass_w0rd", GivenName = "Jason", Surname = "Bryant", Role = "Administrator" },
+          new User() {UserId = 3, UserName = "elyse_seller", EmailAddress = "elyse.seller@email.com", Password = "MyPass_w0rd", GivenName = "Elyse", Surname = "Lambert", Role = "Seller" }
+        );
     }
 }

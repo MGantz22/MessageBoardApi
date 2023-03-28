@@ -2,9 +2,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MessageBoard.Models;
 
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+
 namespace MessageBoard.Controllers
 {
-[Route("api/[controller]")]
+  [Route("api/[controller]")]
   [ApiController]
   public class UsersController : ControllerBase
   {
@@ -13,6 +21,34 @@ namespace MessageBoard.Controllers
     public UsersController(MessageBoardApiContext db)
     {
       _db = db;
+    }
+
+    [HttpGet("Admins")]
+    [Authorize]
+    public IActionResult AdminsEndpoint()
+    {
+      User currentUser = GetCurrentUser();
+      return Ok($"Hi {currentUser.GivenName}, you are a(n) {currentUser.Role}");
+    }
+
+    private User GetCurrentUser()
+    {
+      var identity = HttpContext.User.Identity as ClaimsIdentity;
+
+      if (identity != null)
+      {
+        var userClaims = identity.Claims;
+
+        return new User
+        {
+          UserName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value,
+          EmailAddress = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)?.Value,
+          GivenName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.GivenName)?.Value,
+          Surname = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Surname)?.Value,
+          Role = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Role)?.Value
+        };
+      }
+      return null;
     }
 
     [HttpGet]
