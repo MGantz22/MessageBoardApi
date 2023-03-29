@@ -3,6 +3,7 @@ using System;
 using MessageBoard.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MessageBoardApi.Migrations
 {
     [DbContext(typeof(MessageBoardApiContext))]
-    partial class MessageBoardApiContextModelSnapshot : ModelSnapshot
+    [Migration("20230329165543_Iden")]
+    partial class Iden
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,44 +101,6 @@ namespace MessageBoardApi.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "af1ef50a-9212-415c-b7eb-dd5514d049df",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "a945eed5-b274-4dfe-a20c-a69974981a8c",
-                            EmailAddress = "jason.admin@email.com",
-                            EmailConfirmed = false,
-                            GivenName = "Jason",
-                            LockoutEnabled = false,
-                            Password = "MyPass_w0rd",
-                            PhoneNumberConfirmed = false,
-                            Role = "Administrator",
-                            SecurityStamp = "0ce93afd-fc0b-499f-b619-1219dd3070c1",
-                            Surname = "Bryant",
-                            TwoFactorEnabled = false,
-                            UserId = 2,
-                            UserName = "jason_admin"
-                        },
-                        new
-                        {
-                            Id = "fd9c81fa-8e89-494d-b3c7-4e0fa7a01e7d",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "69c14e8c-66d2-4218-8e69-9fe7021d67e2",
-                            EmailAddress = "elyse.seller@email.com",
-                            EmailConfirmed = false,
-                            GivenName = "Elyse",
-                            LockoutEnabled = false,
-                            Password = "MyPass_w0rd",
-                            PhoneNumberConfirmed = false,
-                            Role = "Seller",
-                            SecurityStamp = "cb82aa17-bb8b-454e-98ad-a81eb15e6849",
-                            Surname = "Lambert",
-                            TwoFactorEnabled = false,
-                            UserId = 3,
-                            UserName = "elyse_seller"
-                        });
                 });
 
             modelBuilder.Entity("MessageBoard.Models.Group", b =>
@@ -151,13 +115,6 @@ namespace MessageBoardApi.Migrations
                     b.HasKey("GroupId");
 
                     b.ToTable("Groups");
-
-                    b.HasData(
-                        new
-                        {
-                            GroupId = 1,
-                            GroupName = "Gossip"
-                        });
                 });
 
             modelBuilder.Entity("MessageBoard.Models.Post", b =>
