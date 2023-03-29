@@ -42,7 +42,7 @@ namespace MessageBoard.Controllers
             return NotFound("User not found");
         }
 
-        private string Generate(User user)
+        private string Generate(ApplicationUser user)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
@@ -50,7 +50,7 @@ namespace MessageBoard.Controllers
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, user.UserName),
-                new Claim(ClaimTypes.Email, user.EmailAddress),
+                new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.GivenName, user.GivenName),
                 new Claim(ClaimTypes.Surname, user.Surname),
                 new Claim(ClaimTypes.Role, user.Role)
@@ -65,9 +65,9 @@ namespace MessageBoard.Controllers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        private User Authenticate(UserLogin userLogin)
+        private ApplicationUser Authenticate(UserLogin userLogin)
         {
-            User currentUser = _db.Users.FirstOrDefault(o => o.UserName.ToLower() == userLogin.UserName.ToLower() && o.Password == userLogin.Password);
+            ApplicationUser currentUser = _db.Users.FirstOrDefault(o => o.UserName.ToLower() == userLogin.UserName.ToLower() && o.Password == userLogin.Password);
 
             if (currentUser != null)
             {
