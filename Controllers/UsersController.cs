@@ -27,7 +27,7 @@ namespace MessageBoard.Controllers
     [Authorize(Roles = "Administrator")]
     public IActionResult AdminsEndpoint()
     {
-      User currentUser = GetCurrentUser();
+      ApplicationUser currentUser = GetCurrentUser();
       return Ok($"Hi {currentUser.GivenName}, you are a(n) {currentUser.Role}");
     }
 
@@ -35,7 +35,7 @@ namespace MessageBoard.Controllers
     [ Authorize(Roles = "Seller")]
     public IActionResult SellersEndpoint()
     {
-      User currentUser = GetCurrentUser();
+      ApplicationUser currentUser = GetCurrentUser();
       return Ok($"Hi {currentUser.GivenName}, you are a(n) {currentUser.Role}");
     }
 
@@ -43,11 +43,11 @@ namespace MessageBoard.Controllers
     [ Authorize(Roles = "Administrator, Seller")]
     public IActionResult AdminsAndSellersEndpoint()
     {
-      User currentUser = GetCurrentUser();
+      ApplicationUser currentUser = GetCurrentUser();
       return Ok($"Hi {currentUser.GivenName}, you are a(n) {currentUser.Role}");
     }
 
-    private User GetCurrentUser()
+    private ApplicationUser GetCurrentUser()
     {
       var identity = HttpContext.User.Identity as ClaimsIdentity;
 
@@ -55,10 +55,10 @@ namespace MessageBoard.Controllers
       {
         var userClaims = identity.Claims;
 
-        return new User
+        return new ApplicationUser
         {
           UserName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value,
-          EmailAddress = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)?.Value,
+          Email = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)?.Value,
           GivenName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.GivenName)?.Value,
           Surname = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Surname)?.Value,
           Role = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Role)?.Value
@@ -68,15 +68,15 @@ namespace MessageBoard.Controllers
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<User>>> Get()
+    public async Task<ActionResult<IEnumerable<ApplicationUser>>> Get()
     {
-        return await _db.Users.ToListAsync();
+        return await _db.ApplicationUsers.ToListAsync();
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<User>> GetUser(int id)
+    public async Task<ActionResult<ApplicationUser>> GetUser(int id)
     {
-        User user = await _db.Users.FindAsync(id);
+        ApplicationUser user = await _db.Users.FindAsync(id);
         if (user == null)
         {
             return NotFound();
@@ -85,9 +85,9 @@ namespace MessageBoard.Controllers
     }
 
     [HttpPost]
-    public async Task<ActionResult<User>> Post(User user)
+    public async Task<ActionResult<ApplicationUser>> Post(ApplicationUser user)
     {
-        _db.Users.Add(user);
+        _db.ApplicationUsers.Add(user);
         await _db.SaveChangesAsync();
         return CreatedAtAction(nameof(GetUser), new {id = user.UserId}, user);
     }
