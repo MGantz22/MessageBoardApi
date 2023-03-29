@@ -31,7 +31,7 @@ namespace MessageBoard.Controllers
 
       if (user != null)
       {
-        query = query.Where(item=>item.User.UserName == user);
+        query = query.Where(item=>item.ApplicationUser.UserName == user);
       }
       
       return await query.ToListAsync();
