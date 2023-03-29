@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MessageBoard.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace MessageBoard
 {
