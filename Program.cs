@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace MessageBoard;
@@ -29,18 +30,14 @@ public class Program
 
     builder.Services.AddControllers();
 
-    // builder.Services.AddDbContext<MessageBoardApiContext>(
-    //                   dbContextOptions => dbContextOptions
-    //                     .UseMySql(
-    //                       builder.Configuration["ConnectionStrings:DefaultConnection"], 
-    //                       ServerVersion.AutoDetect(builder.Configuration["ConnectionStrings:DefaultConnection"]
-    //                     )
-    //                   )
-    //                 );
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
     builder.Services.AddAuthentication();
+
+    builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<MessageBoardApiContext>()
+                .AddDefaultTokenProviders();
  
     startup.ConfigureServices(builder.Services); // calling ConfigureServices method
   
