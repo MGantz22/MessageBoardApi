@@ -5,6 +5,7 @@ namespace MessageBoard.Models
         public int PostId {get; set;}
         public DateTime date {get; set;} = DateTime.Now;
         public string MessageBody {get; set;}
+        public string MessageName { get; set; }
 
         public int GroupId {get; set;}
         public Group Group {get; set;}
