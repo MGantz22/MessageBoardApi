@@ -9,7 +9,7 @@ namespace MessageBoard.Models
         public int GroupId {get; set;}
         public Group Group {get; set;}
         //public string GroupName = _db.Groups.Find(GroupId).GroupName
-        public User User {get; set;}
+        public ApplicationUser ApplicationUser {get; set;}
         public int UserId {get;set;}
     }
 }
