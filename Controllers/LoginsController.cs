@@ -67,7 +67,7 @@ namespace MessageBoard.Controllers
 
         private ApplicationUser Authenticate(UserLogin userLogin)
         {
-            ApplicationUser currentUser = _db.Users.FirstOrDefault(o => o.UserName.ToLower() == userLogin.UserName.ToLower() && o.Password == userLogin.Password);
+            ApplicationUser currentUser = _db.ApplicationUsers.FirstOrDefault(o => o.UserName.ToLower() == userLogin.UserName.ToLower() && o.Password == userLogin.Password);
 
             if (currentUser != null)
             {
